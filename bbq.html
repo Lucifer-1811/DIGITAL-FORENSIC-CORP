@@ -8,7 +8,18 @@
     href=https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css>
     <link rel=stylesheet href=./bbq.css> <link rel=stylesheet
     href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css>
+    <link rel=manifest href=./manifest.json>
+    <meta name="theme-color" content="#00ffff" />
   </head>
+  <script>
+    "serviceWorker" in navigator &&
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("service-worker.js")
+          .then((e) => console.log("✅ Service Worker registered!"))
+          .catch((e) => console.error("❌ Service Worker failed:", e));
+      });
+  </script>
   <body>
     <header>
       <nav class="navbar">
@@ -250,6 +261,12 @@
         </div>
       </div>
     </section>
+    <div id="chatbot-toggle">💬</div>
+    <div id="chatbot-box">
+      <div id="chatbot-header">CyberBot 👨‍💻</div>
+      <div id="chatbot-messages"></div>
+      <input id="chatbot-input" placeholder="Type a message..." />
+    </div>
     <footer class="footer">
       <div class="footer-container">
         <div class="footer-column">
@@ -271,6 +288,7 @@
             <a href="#"><i class="fab fa-facebook"></i></a>
             <a href="#"><i class="fab fa-twitter"></i></a>
             <a href="#"><i class="fab fa-linkedin"></i></a>
+            <button id="install-btn">Install App</button>
           </div>
         </div>
       </div>
@@ -292,6 +310,49 @@
                 .querySelector(this.getAttribute("href"))
                 .scrollIntoView({ behavior: "smooth" });
           });
+        });
+      const chatbotToggle = document.getElementById("chatbot-toggle"),
+        chatbotBox = document.getElementById("chatbot-box"),
+        chatbotInput = document.getElementById("chatbot-input"),
+        chatbotMessages = document.getElementById("chatbot-messages");
+      function appendMessage(e, t) {
+        const o = document.createElement("div");
+        (o.innerHTML = `<strong>${e}:</strong> ${t}`),
+          chatbotMessages.appendChild(o),
+          (chatbotMessages.scrollTop = chatbotMessages.scrollHeight);
+      }
+      let deferredPrompt;
+      chatbotToggle.addEventListener("click", () => {
+        chatbotBox.style.display =
+          "flex" === chatbotBox.style.display ? "none" : "flex";
+      }),
+        chatbotInput.addEventListener("keypress", function (e) {
+          if ("Enter" === e.key && this.value.trim()) {
+            const e = this.value;
+            appendMessage("You", e), (this.value = "");
+            let t = "Sorry, It's your problem ! fix it by yourself:)";
+            e.toLowerCase().includes("hello") &&
+              (t = "Hi there! How can I help you today?"),
+              e.toLowerCase().includes("support") &&
+                (t = "You can reach support at support@DFC.com"),
+              setTimeout(() => {
+                appendMessage("CyberBot", t);
+              }, 500);
+          }
+        }),
+        window.addEventListener("beforeinstallprompt", (e) => {
+          e.preventDefault(), (deferredPrompt = e);
+          const t = document.getElementById("install-btn");
+          t && (t.style.display = "block"),
+            t.addEventListener("click", () => {
+              deferredPrompt.prompt(),
+                deferredPrompt.userChoice.then((e) => {
+                  "accepted" === e.outcome
+                    ? console.log("User accepted install")
+                    : console.log("User dismissed install"),
+                    (deferredPrompt = null);
+                });
+            });
         });
     </script>
   </body>
