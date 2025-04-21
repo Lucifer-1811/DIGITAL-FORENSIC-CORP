@@ -239,27 +239,57 @@
           </div>
         </div>
         <div class="contact-form">
-          <form>
+          <form
+            action="https://formsubmit.co/neerajnanda05@gmail.com"
+            method="POST"
+          >
+            <!-- Add these hidden inputs -->
+            <input
+              type="hidden"
+              name="_subject"
+              value="New DFC Contact Form Submission"
+            />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input
+              type="hidden"
+              name="_next"
+              value="https://yourwebsite.com/thank-you.html"
+            />
+
             <div class="form-group">
-              <input placeholder="Your Name" required />
+              <input type="text" name="name" placeholder="Your Name" required />
             </div>
             <div class="form-group">
-              <input type="email" placeholder="Your Email" required />
+              <input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                required
+              />
             </div>
             <div class="form-group">
-              <input type="tel" placeholder="Your Phone" />
+              <input type="tel" name="phone" placeholder="Your Phone" />
             </div>
             <div class="form-group">
-              <select required>
+              <select name="service" required>
                 <option value="">Select Service Needed</option>
-                <option value="forensic">Digital Forensic</option>
-                <option value="data-recovery">Data Recovery</option>
-                <option value="cyber-crime">Cyber Crime Investigation</option>
-                <option value="emergency">Emergency Assistance</option>
+                <option value="Digital Forensic">Digital Forensic</option>
+                <option value="Data Recovery">Data Recovery</option>
+                <option value="Cyber Crime Investigation">
+                  Cyber Crime Investigation
+                </option>
+                <option value="Emergency Assistance">
+                  Emergency Assistance
+                </option>
               </select>
             </div>
             <div class="form-group">
-              <textarea placeholder="Your Message" required></textarea>
+              <textarea
+                name="message"
+                placeholder="Your Message"
+                required
+              ></textarea>
             </div>
             <button type="submit" class="btn">Send Message</button>
           </form>
