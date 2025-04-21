@@ -1,7 +1,7 @@
 {
   "name": "Digital Forensics Assistant",
   "short_name": "CyberBot",
-  "start_url": "index.html",
+  "start_url": "bbq.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#00ffff",
