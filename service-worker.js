@@ -2,6 +2,7 @@ const CACHE_NAME = "bbq-site-cache-v1";
 const ASSETS_TO_CACHE = [
   "/",
   "./bbq.html",
+  "./password.html",
   "./bbq.css",
   "./manifest.json",
   "./img/logo.png",
