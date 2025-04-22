@@ -20,12 +20,15 @@
   <script>
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
-        .register("/service-worker.js")
+        .register("service-worker.js")
         .then(() => console.log("Service Worker Registered"))
         .catch((err) => console.log("Service Worker Failed:", err));
     }
   </script>
   <body>
+    <div id="theme-toggle" class="theme-toggle">
+      <i class="fas fa-moon"></i>
+    </div>
     <header>
       <nav class="navbar">
         <div class="logo">
@@ -239,57 +242,27 @@
           </div>
         </div>
         <div class="contact-form">
-          <form
-            action="https://formsubmit.co/neerajnanda05@gmail.com"
-            method="POST"
-          >
-            <!-- Add these hidden inputs -->
-            <input
-              type="hidden"
-              name="_subject"
-              value="New DFC Contact Form Submission"
-            />
-            <input type="hidden" name="_template" value="table" />
-            <input type="hidden" name="_captcha" value="false" />
-            <input
-              type="hidden"
-              name="_next"
-              value="https://yourwebsite.com/thank-you.html"
-            />
-
+          <form>
             <div class="form-group">
-              <input type="text" name="name" placeholder="Your Name" required />
+              <input placeholder="Your Name" required />
             </div>
             <div class="form-group">
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                required
-              />
+              <input type="email" placeholder="Your Email" required />
             </div>
             <div class="form-group">
-              <input type="tel" name="phone" placeholder="Your Phone" />
+              <input type="tel" placeholder="Your Phone" />
             </div>
             <div class="form-group">
-              <select name="service" required>
+              <select required>
                 <option value="">Select Service Needed</option>
-                <option value="Digital Forensic">Digital Forensic</option>
-                <option value="Data Recovery">Data Recovery</option>
-                <option value="Cyber Crime Investigation">
-                  Cyber Crime Investigation
-                </option>
-                <option value="Emergency Assistance">
-                  Emergency Assistance
-                </option>
+                <option value="forensic">Digital Forensic</option>
+                <option value="data-recovery">Data Recovery</option>
+                <option value="cyber-crime">Cyber Crime Investigation</option>
+                <option value="emergency">Emergency Assistance</option>
               </select>
             </div>
             <div class="form-group">
-              <textarea
-                name="message"
-                placeholder="Your Message"
-                required
-              ></textarea>
+              <textarea placeholder="Your Message" required></textarea>
             </div>
             <button type="submit" class="btn">Send Message</button>
           </form>
@@ -389,6 +362,34 @@
                 });
             });
         });
+      // Theme toggle functionality
+      const themeToggle = document.getElementById("theme-toggle");
+      const body = document.body;
+
+      // Check for saved theme preference or use preferred color scheme
+      const currentTheme =
+        localStorage.getItem("theme") ||
+        (window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light");
+
+      if (currentTheme === "dark") {
+        body.classList.add("dark-mode");
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+      }
+
+      themeToggle.addEventListener("click", () => {
+        body.classList.toggle("dark-mode");
+        const isDarkMode = body.classList.contains("dark-mode");
+
+        if (isDarkMode) {
+          themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+          localStorage.setItem("theme", "dark");
+        } else {
+          themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+          localStorage.setItem("theme", "light");
+        }
+      });
     </script>
   </body>
 </html>
